@@ -1,5 +1,6 @@
 import pickle
 import socket
+import struct
 
 import cv2
 
@@ -17,10 +18,8 @@ if cam.isOpened():
                     while connection:
                         ret_camread, img = cam.read()
                         ret_imcode, jpg = cv2.imencode('.jpg', img)
-                        packet = pickle.dumps(jpg)
-                        packet_size = len(packet)
-                        connection.sendall(packet_size.to_bytes(32, 'little', signed=False))
-                        connection.sendall(packet)
+                        data = pickle.dumps(jpg)
+                        connection.sendall(struct.pack("L", len(data)) + data)
     except KeyboardInterrupt:
         pass
 
