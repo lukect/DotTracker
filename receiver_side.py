@@ -4,6 +4,8 @@ import struct
 
 import cv2
 
+detector = cv2.SimpleBlobDetector()
+
 buffer = b''
 payload_size = struct.calcsize("L")
 
@@ -29,9 +31,12 @@ try:
 
             img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
 
-            ret, img = cv2.threshold(img, 0, 50, cv2.THRESH_BINARY)
+            # ret, img = cv2.threshold(img, 0, 100, cv2.THRESH_BINARY)
+            # circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 20, param1=300, param2=0.6, minRadius=50, maxRadius=0)
+            blobs = detector.detect(img)
 
             cv2.imshow('Live Raspberry Pi ', mat=img)
+            print(blobs)
 
             if cv2.waitKey(1) == ord('q'):
                 break

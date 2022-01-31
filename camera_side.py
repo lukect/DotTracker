@@ -21,7 +21,7 @@ if cam.isOpened():
                         ret_imcode, jpg = cv2.imencode('.jpg', img)
                         data = pickle.dumps(jpg)
                         connection.sendall(struct.pack("L", len(data)) + data)
-                except ConnectionError:
+                except (ConnectionError, TimeoutError) as e:
                     pass
     except KeyboardInterrupt:
         pass
