@@ -13,14 +13,16 @@ if cam.isOpened():
             server_socket.bind((socket.gethostname(), 8382))
             server_socket.listen(1)
             while True:
-                with server_socket.accept() as connection:
-                    connection.settimeout(2)
-                    while connection:
-                        ret_camread, img = cam.read()
-                        ret_imcode, jpg = cv2.imencode('.jpg', img)
-                        data = pickle.dumps(jpg)
-                        connection.sendall(struct.pack("L", len(data)) + data)
+                connection, address = server_socket.accept()
+                connection.settimeout(2)
+                while connection:
+                    ret_camread, img = cam.read()
+                    ret_imcode, jpg = cv2.imencode('.jpg', img)
+                    data = pickle.dumps(jpg)
+                    connection.sendall(struct.pack("L", len(data)) + data)
     except KeyboardInterrupt:
         pass
 
+server_socket.close()
+connection.close()
 cam.release()
