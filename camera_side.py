@@ -3,7 +3,7 @@ import socket
 
 import cv2
 
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(-1, cv2.CAP_V4L2)
 if cam.isOpened():
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
