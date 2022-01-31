@@ -26,7 +26,14 @@ try:
 
             frame = pickle.loads(frame_data)
             img = cv2.imdecode(frame, cv2.IMREAD_COLOR)
+
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            ret, img = cv2.threshold(img, 200, 255, cv2.THRESH_BINARY)
+
             cv2.imshow('Live Raspberry Pi ', mat=img)
+
+            if cv2.waitKey(1) == ord('q'):
+                break
 except KeyboardInterrupt:
     pass
 
