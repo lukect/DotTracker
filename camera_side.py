@@ -12,10 +12,12 @@ if cam.isOpened():
             while True:
                 with server_socket.accept() as connection:
                     connection.settimeout(2)
-                    while connection:  # TODO: WHILE CONNECTED
+                    while connection:
                         ret_camread, img = cam.read()
                         ret_imcode, jpg = cv2.imencode('.jpg', img)
                         packet = pickle.dumps(jpg)
+                        packet_size = len(packet)
+                        connection.sendall(packet_size)
                         connection.sendall(packet)
     except KeyboardInterrupt:
         pass
