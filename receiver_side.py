@@ -8,7 +8,7 @@ try:
         socket.settimeout(2)
         socket.connect(("192.168.12.201", 8382))
         while socket:
-            packet_size = int(socket.recv(4))  # int size
+            packet_size = int.from_bytes(socket.recv(4), 'little', signed=False)
             packet = socket.recv(packet_size)  # 1GB max
             data = pickle.loads(packet)
             img = cv2.imdecode(data, cv2.IMREAD_COLOR)
