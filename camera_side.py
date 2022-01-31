@@ -19,7 +19,7 @@ if cam.isOpened():
                         ret_imcode, jpg = cv2.imencode('.jpg', img)
                         packet = pickle.dumps(jpg)
                         packet_size = len(packet)
-                        connection.sendall(packet_size.to_bytes(2, 'little', signed=False))
+                        connection.sendall(packet_size.to_bytes(32, 'little', signed=False))
                         connection.sendall(packet)
     except KeyboardInterrupt:
         pass
