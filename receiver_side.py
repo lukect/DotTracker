@@ -22,10 +22,10 @@ try:
             while len(buffer) < msg_size:
                 buffer += socket.recv(4096)
             frame_data = buffer[:msg_size]
-            data = data[msg_size:]
+            buffer = buffer[msg_size:]
 
-            buffer = pickle.loads(frame_data)
-            img = cv2.imdecode(buffer, cv2.IMREAD_COLOR)
+            frame = pickle.loads(frame_data)
+            img = cv2.imdecode(frame, cv2.IMREAD_COLOR)
             cv2.imshow('Live Raspberry Pi ', mat=img)
 except KeyboardInterrupt:
     pass
