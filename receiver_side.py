@@ -13,10 +13,10 @@ def vector_position_from_centre(img_size, circle):
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket:
     socket.settimeout(2)
-    socket.connect(("192.168.12.201", 8382))
+    socket.connect(('192.168.12.201', 8382))
 
     buffer = b''
-    payload_size = struct.calcsize("L")
+    payload_size = struct.calcsize('L')
 
     while socket:
         while len(buffer) < payload_size:
@@ -24,7 +24,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket:
         packed_msg_size = buffer[:payload_size]
 
         buffer = buffer[payload_size:]
-        msg_size = struct.unpack("L", packed_msg_size)[0]
+        msg_size = struct.unpack('L', packed_msg_size)[0]
 
         while len(buffer) < msg_size:
             buffer += socket.recv(4096)
@@ -56,10 +56,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket:
             circle_x, circle_y, circle_radius = circles[0][0]  # Only track the most prominent circle/dot
             x, y = vector_position_from_centre(img.shape, (circle_x, circle_y))
             img = cv2.circle(img, (int(circle_x), int(circle_y)), int(1.075 * circle_radius), (0, 255, 255), 2)
-            cv2.putText(img, "radius = " + str(round(circle_radius, 1)), (20, 130), cv2.FONT_HERSHEY_SIMPLEX, 1,
+            cv2.putText(img, 'radius = ' + str(round(circle_radius, 1)), (20, 130), cv2.FONT_HERSHEY_SIMPLEX, 1,
                         (255, 0, 255), 2)
-            cv2.putText(img, "x = " + str(round(x, 3)), (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
-            cv2.putText(img, "y = " + str(round(y, 3)), (20, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+            cv2.putText(img, 'x = ' + str(round(x, 3)), (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
+            cv2.putText(img, 'y = ' + str(round(y, 3)), (20, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
 
         cv2.imshow('Live Raspberry Pi', mat=img)
         cv2.imshow('Live Raspberry Pi: Red-only view', mat=red_filter)
