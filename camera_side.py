@@ -11,7 +11,7 @@ if cam.isOpened():
     try:
         while True:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
-                server_socket.bind((socket.gethostname(), 8383))
+                server_socket.bind((socket.gethostname(), 8382))
                 server_socket.listen(1)
                 while True:
                     try:
