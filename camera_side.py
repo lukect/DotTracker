@@ -18,11 +18,11 @@ if cam.isOpened():
                         connection, address = server_socket.accept()
                         connection.settimeout(2)
                         while connection:
-                            ret_camread, img = cam.read()
+                            ret_cam, img = cam.read()
                             ret_imcode, jpg = cv2.imencode('.jpg', img)
                             data = pickle.dumps(jpg)
                             connection.sendall(struct.pack("L", len(data)) + data)
-                    except (ConnectionError, TimeoutError) as e:
+                    except (ConnectionError, TimeoutError, socket.timeout) as e:
                         pass
     except KeyboardInterrupt:
         pass

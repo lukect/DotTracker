@@ -48,16 +48,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as socket:
 
         red_filter = cv2.bitwise_and(img, img, mask=full_mask)
         grayscale_red_filter = cv2.cvtColor(red_filter, cv2.COLOR_BGR2GRAY)
-        grayscale_red_filter = cv2.medianBlur(grayscale_red_filter, 5)  # Blurring makes circle detection easier.
 
-        circles = cv2.HoughCircles(grayscale_red_filter, cv2.HOUGH_GRADIENT, 1, minDist=100, param1=20, param2=30,
-                                   minRadius=30,
-                                   maxRadius=0)
+        circles = cv2.HoughCircles(grayscale_red_filter, cv2.HOUGH_GRADIENT_ALT, 1, minDist=100, param1=500,
+                                   param2=0.67, minRadius=10, maxRadius=0)
 
         if circles is not None:
             circle_x, circle_y, circle_radius = circles[0][0]  # Only track the most prominent circle/dot
             x, y = vector_position_from_centre(img.shape, (circle_x, circle_y))
-            img = cv2.circle(img, (int(circle_x), int(circle_y)), int(circle_radius + 10), (0, 255, 255), 3)
+            img = cv2.circle(img, (int(circle_x), int(circle_y)), int(1.075 * circle_radius), (0, 255, 255), 2)
             cv2.putText(img, "radius = " + str(round(circle_radius, 1)), (20, 130), cv2.FONT_HERSHEY_SIMPLEX, 1,
                         (255, 0, 255), 2)
             cv2.putText(img, "x = " + str(round(x, 3)), (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255), 2)
