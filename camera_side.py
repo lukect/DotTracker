@@ -15,7 +15,7 @@ if cam.isOpened():
                 server_socket.bind((socket.gethostname(), 8382))
                 server_socket.listen(1)
                 print('Server Socket successfully initialized!\n'
-                      'Listening on port ' + server_socket.getsockname()[1])
+                      'Listening on port ' + str(server_socket.getsockname()[1]))
                 while True:
                     try:
                         connection, address = server_socket.accept()
